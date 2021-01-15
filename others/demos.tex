@@ -1,0 +1,875 @@
+
+\chapter{绪论}
+\section{概率论}
+概率论的两条基本法则：
+\begin{equation} 
+	\text{\textbf{加法法则}}\ \ p(X) = \sum_Y p(X, Y)
+\end{equation}
+\begin{equation} 
+	\text{\textbf{乘法法则}} \ \ p(X, Y) = p(Y\ |\ X)p(X)
+\end{equation}
+其中$p(X, Y)$是联合概率分布，表示是\ “$X$且$Y$的概率”；$P(Y\ |\ X)$是条件概率，表示为“给定$X$的条件下， $Y$发生的概率”。
+
+根据对称性\ $p(X, Y) = p(Y, X)$, 可以推导出：
+\begin{equation}
+	\label{eq:bayes}
+	p(Y\ |\ X) = \frac{p(X\ |\ Y)p(Y)}{p(X)}
+\end{equation}
+公式\ref{eq:bayes}被称为\emph{贝叶斯定理}(Bayes' theorem)。使用加和法则，贝叶斯定理中的分母可以用出现在分子中的项表示：
+\begin{equation}
+	p(X) = \sum_Y p(X\ |\ Y)p(Y)
+\end{equation}
+\subsection{概率密度}
+对于连续型随机变量$x$ 位于区间$ (a, b)$上的概率由下式给出：
+\begin{equation}
+	p(x\in(a, b)) = \int_{a}^{b}p(x)\ \mathrm{d}x
+\end{equation}
+由于概率是非负的，并且$x$的值一定位于实数轴的某个位置，因此概率密度一定满足以下两个条件：
+\begin{equation}
+	p(x) \geqslant 0
+\end{equation}
+\begin{equation}
+	\int_{-\infty}^{+\infty}p(x)\ \mathrm{d}x= 1
+\end{equation}
+
+我们考虑一个随机变量的转换$x = g(y)$，$p_x(x)$与$p_y(y)$分别代表了$x$与$y$的概率密度函数，对于很小的$\delta_x$，落在区间$(x,\ x+\delta_x)$内的观测值会被变换到$(y,\ y+\delta_y)$中。其中$p_x(x)\delta_x \simeq p_y(y)\delta_y$，因此
+\begin{equation}
+	p_y(y) = p_x(x)\left|\frac{\mathrm{d}x}{\mathrm{d}y}\right| = p_x(g(y))\left|g'(y)\right|
+\end{equation}
+这个性质说明了概率密度最大值的位置，取决于变量的选择。
+
+位于区间$(-\infty,\ z)$的$x$的概率密度由累积分布函数(c.d.f)给出。定义为：
+\begin{equation}
+	P(z) = \int_{-\infty}^{z}p(x)\ \mathrm{d}x
+\end{equation}
+满足$P'(x) = p(x)$。
+
+如果有多个连续变量$x_1, x_2, \ldots, x_D$，整体记作向量$\bm x$，那么我们可以定义联合概率密度$p(\bm x) = p(x_1, x_2, \ldots, x_D)$，使得$\bm x$落在包含点$\bm x$的无穷小体积$\delta_{\bm x}$的概率由$p(\bm x) \delta_{\bm x}$给出。多便利那个概率密度必须满足
+\begin{equation}
+	p(\bm x) \geqslant 0
+\end{equation}
+\begin{equation}
+	\int p(\bm x)\ \mathrm{d}\bm x = 1
+\end{equation}
+其中积分必须在整个$\bm x$的空间上进行。
+
+概率密度的加和规则、乘积规则以及贝叶斯规则同样可以应用到连续变量的概率密度函数上，也可以应用到离散变量和连续变量的混合的情形。若$x$, $y$是两个连续变量，那么加和规则和乘积规则为
+\begin{equation}
+	p(x) = \int p(x, y)\ \mathrm{d}y
+\end{equation}
+\begin{equation}
+	p(x, y) = p(y\ |\ x)p(x)
+\end{equation}
+形式化证明连续变量的加和规则和乘积规则需要用到\emph{测度论}的数学分支。
+
+\subsection{期望和方差}
+在概率分布$p(x)$下，函数$f(x)$的期望
+\begin{equation}
+	\mathbb E[f(x)] = \sum_{x}p(x)f(x) 
+\end{equation}
+连续变量的期望为
+\begin{equation}
+	\mathbb E[f(x)] = \int_{-\infty}^{+\infty}p(x)f(x)\ \mathrm{d}x
+\end{equation}
+在给定$N$个独立同分布的样本点时，可以通过求平均来得到期望的一个估计值
+\begin{equation}
+	\mathbb E[f] \simeq \frac{1}{N}\sum_{n=1}^{N} f(x_n)
+\end{equation}
+有时候也需要考虑多变量的期望，例如
+\begin{equation}
+	\mathbb E_x[f(x, y)]
+\end{equation}
+表示$f(x, y)$关于$x$的期望。$\mathbb E_x[f(x, y)]$是关于$y$的函数。
+同样地，也可以表示关于一个条件分布的期望，即
+\begin{equation}
+	\mathbb E_x[f\ |\ y] = \sum_x p(x\ |\ y)f(x)
+\end{equation}
+
+$f(x)$的方差被定义为
+\begin{equation}
+	\mathrm{Var}[f(x)] = \mathbb E[(f(x)-\mathbb E[f(x)])^2]
+\end{equation}
+展开之后，可以得到
+\begin{equation}
+	\mathrm{Var}[f(x)] = \mathbb E[f(x)^2] - \mathbb E[f(x)]^2
+\end{equation}
+特别的，关于$x$的方差
+\begin{equation}
+	\mathrm{Var}[x] = \mathbb E[x^2] - \mathbb E[x]^2
+\end{equation}
+对于两个变量$x$和$y$，协方差被定义为
+\begin{equation}
+	\mathrm{Cov}(x, y) = \mathbb E[(x-\mathbb E[x])(y - \mathbb E[y])]
+\end{equation}
+
+在两个随机向量$\bm x$和$\bm y$的情形下，协方差是一个矩阵
+\begin{equation}
+	\mathrm{Cov}[\bm x, \bm y] = \mathbb E_{\bm x, \bm y}[(\bm x - \mathbb E[\bm x])(\bm y - \mathbb E[\bm y])^\top]
+\end{equation}	
+\section{信息论}
+随机变量$x$的\emph{熵}
+\begin{equation}
+	H[x] = -\sum_{x}p(x)\log_2p(x)
+\end{equation}
+对于连续型变量$x$的\emph{微分熵}
+\begin{equation}
+	H[x] = -\int p(x)\log p(x)\ \mathrm{d}x
+\end{equation}
+最大微分熵的分布是高斯分布
+\begin{equation}
+	p(x) = \frac{1}{(2\pi\sigma^2)}\exp\left\{ -\frac{(x-\mu)^2}{2\sigma^2} \right\}
+\end{equation}
+对高斯分布求微分熵，可以得到
+\begin{equation}
+	H[x] = \frac{1}{2}\{1+\log(2\pi\sigma^2)\}
+\end{equation}
+可以看到，熵随着分布宽度(即$\sigma^2$)的增加而增加。这个结果也表明，与离散熵不同，微分熵可以为负。
+
+假设有一个联合概率分布$p(\bm x, \bm y)$。我们从这个分布中抽取一对$\bm x$和$\bm y$。如果$\bm x$的值已知，$\bm y$的\emph{条件熵}为
+\begin{equation}
+	H[\bm y\ |\ \bm x] = -\iint p(\bm x, \bm y)\log p(\bm y\ |\ \bm x)\ \mathrm{d}\bm x\mathrm{d}\bm y 
+\end{equation}
+利用概率乘积规则，很容易得到，条件熵满足下面关系
+\begin{equation}
+	H[\bm x, \bm y] = H[\bm y\ |\ \bm x] + H[\bm x]
+\end{equation}
+其中$H[\bm x, \bm y]$是概率分布$p(\bm x, \bm y)$的微分熵，$H[\bm x]$是边缘分布$p(\bm x)$的微分熵。
+\subsection{相对熵(KL散度)和互信息}
+考虑某个真实分布$p(x)$，我们使用一个近似分布$q(x)$来对它建模。衡量这两个分布之间的相似度，可以使用两个分布之间的\emph{相对熵}，也称为KL\emph{散度}
+\begin{align}
+	\mathrm{KL}(p\ \|\ q) &= -\int p(\bm x)\log q(\bm x)\ \mathrm{d}\bm x -\left( -\int p(\bm x)\log q(\bm x)\ \mathrm{d}\bm x \right) \notag \\
+						& = -\int p(\bm x)\log \left\{ \frac{q(\bm x)}{p(\bm x)} \right\}\ \mathrm{d}\bm x
+\end{align}
+注意，KL散度不是对称量，即$\mathrm{KL}(p\ \|\ q) \neq \mathrm{KL}(q\ \|\ p)$。另外KL散度满足$\mathrm{KL}(p\ \|\ q) \geq 0$，当且仅当$p(\bm x) = q(\bm)$时取得等号。可以使用Jensen不等式来证明。Jensen不等式如下
+\begin{equation}
+	f(\mathbb E[x]) \leq \mathbb E[f(x)]
+\end{equation}
+其中$\mathbb E[\cdot]$表示期望，$f(x)$为凸函数。
+
+
+现在考虑由$p(\bm x, \bm y)$给出的两个变量$\bm x$，$\bm y$组成的数据集。如果变量是独立的，那么联合概率分布可以分解为边缘概率的乘积$p(\bm x, \bm y) = p(\bm x)p(\bm y)$。如果变量不是独立的，那么我们可以通过考察联合概率分布与边缘概率分布乘积之间的KL散度来判断它们是否接近于独立。此时，KL散度为
+\begin{align}
+	I[\bm x, \bm y] &\equiv \mathrm{KL}(p(\bm x, \bm y)\ \|\ p(\bm x)p(\bm y)) \notag \\
+	&= -\iint p(\bm x, \bm y) \log \left(\frac{p(\bm x)p(\bm y)}{p(\bm x, \bm y)} \right) \ \mathrm{d}\bm x\mathrm{d}\bm y
+\end{align}
+这称为变量$\bm x$与变量$\bm y$之间的互信息。根据KL散度的性质，有$I[\bm x, \bm y] \geq 0$，当且仅当$\bm x$与$\bm y$相互独立时取得等号。使用概率规则和乘积规则，可以看到互信息和条件熵之间的关系为
+\begin{equation}
+	I[\bm x, \bm y] = H[\bm x] - H[\bm x\ |\ \bm y] = H[\bm y] - H[\bm y\ |\ \bm x]
+\end{equation}
+互信息可以看作是知道了$\bm y$值而造成的$\bm x$的不确性减少(反之亦然)。从贝叶斯的观点来看，可以把$p(\bm x)$看成是$\bm x$的先验分布，把$p(\bm x\ |\ \bm y)$看成观测到新数据$\bm y$之后的后验分布。互信息表示一个新观测数据$\bm y$造成的$\bm x$的不确定性减少。
+\chapter{概率分布}
+\section{二元变量}
+首先考虑一个二元变量$x \in \{0, 1\}$，其中$x=1$的概率记作参数$\mu$，
+\begin{equation}
+	p(x=1\ |\ \mu) = \mu
+\end{equation}
+其中$0 \leq \mu \leq 1$。显然，$p(x=0\ |\ \mu) = 1-\mu$。$x$的概率分布因此可以写成
+\begin{equation}
+	\mathrm{Bern}(x \ |\ \mu) = \mu^x(1-u)^{1-x}
+\end{equation}
+这叫做\emph{伯努利分布}。分布的均值和方差
+\begin{equation}
+	\mathbb E[x] = \mu
+\end{equation}
+\begin{equation}
+	\mathrm{Var}[x] = \mu(1-\mu)
+\end{equation}
+现在假设有一个观测数据集$\mathcal D = \{x_1, \ldots, x_N\}$，且每次观测数据都是独立地从$p(x\ |\ \mu)$中抽取的，因此可以构造关于$\mu$的似然函数
+\begin{equation}
+	\label{eq:bern-likehook}
+	p(\mathcal D \ |\ \mu) = \prod_{n=1}^{N}p(x_n\ |\ \mu) = \prod_{n=1}^{N}\mu^{x_n}(1-\mu)^{1-x_n}
+\end{equation}
+以频率学家的观点来看，可以通过最大化似然函数来估计$\mu$的值，或者，等价的，最小化交叉熵。在伯努利分布的形式下，对数似然函数为
+\begin{equation}
+	\log p(\mathcal D \ |\ \mu) = \sum_{n=1}^{N}\log p(x_n\ |\ \mu) = \sum_{n=1}^{N}\left\{ x_n\log \mu + (1-x_n)\log(1-\mu) \right\}
+\end{equation}
+如果令$\log p(\mathcal{D}\ |\ \mu)$关于$\mu$的导数等于零，就得到了最大似然的估计值
+\begin{equation}
+	\label{eq:bern_ml}
+	\mu_{\mathrm{ML}} = \frac{1}{N}\sum_{n=1}^{N}x_n
+\end{equation}
+这样称为样本均值。如果我们把数据集里$x=1$的观测数量记作$m$，那么可以把公式\ref{eq:bern_ml}写成下面的形式
+\begin{equation}
+	\mu_{\mathrm{ML}} = \frac{m}{N}
+\end{equation}
+
+我们也可以求解给定观测次数$N$的情况下，$x=1$的观测次数$m$的概率分布。这个分布式\emph{二项分布}。
+\begin{equation}
+	\mathrm{Bin}(m\ |\ \mu, N) = \binom{N}{m}\mu^m(1-\mu)^{N-m}
+\end{equation}
+其中
+\begin{equation}
+	\binom{N}{m} = \frac{N!}{(N-m)!m!}
+\end{equation}
+
+由于$m = \sum_{n=1}^{N}x_n$，所以二项分布的均值和方差为
+\begin{equation}
+	\mathbb E[m] = \sum_{m=0}^{N}m\mathrm{Bin}(m\ |\ \mu, N) = N\mu
+\end{equation}
+\begin{equation}
+	\mathrm{Var}[m] = \sum_{m=0}^{N}(m-\mathbb E[m])^2\mathrm{Bin}(m\ |\ \mu, N) = N\mu(1-\mu)
+\end{equation}
+\subsection{Beta分布}
+在最大似然框架中，会出现过拟合的现象，因此可以采用贝叶斯的观点。在伯努力分布中，引入一个关于$\mu$的先验分布$p(\mu)$。我们可以考虑一种简单的先验分布，这种分布与后验分布具有相同的性质，这被称为\emph{共轭先验}。参数$\mu$的先验被选择为\emph{Beta分布}，形式为
+\begin{equation}
+	\label{eq:beta}
+	\mathrm{Beta}(\mu\ |\ a, b) = \frac{\Gamma(a+b)}{\Gamma(a)\Gamma(b)}\mu^{a-1}(1-\mu)^{b-1}
+\end{equation}
+其中$\Gamma(x)$是由以下定义的函数
+\begin{equation}
+	\Gamma(x) \equiv \int_0^{\infty} u^{x-1}e^{-u}\mathrm{d}u
+\end{equation}
+Beta分布的均值和方差为
+\begin{equation}
+	\mathbb E[\mu] = \frac{a}{a+b}
+\end{equation}
+\begin{equation}
+	\mathrm{Var}[\mu] = \frac{ab}{(a+b)^2(a+b+1)}
+\end{equation}
+参数$a$和$b$通常被称为超参数。
+
+现在，可以写出$\mu$的后验概率：将Beta先验\ref{eq:beta} 与二项似然函数\ref{eq:bern-likehook} 相乘，之后归一化。可以得到后验概率分布的形式	
+\begin{equation}
+	p(\mu\ |\ m, l, a, b) = \frac{\Gamma(m+a+b+l)}{\Gamma(m+a)\Gamma(l+b)}\mu^{m+a-1}(1-\mu)^{l+b-1}
+\end{equation}
+其中$m$和$l$分别为$N$次观测中，$x=1$与$x=0$的次数。
+\section{多项式变量}
+\section{高斯分布}
+\section{指数族分布}
+我们目前所讨论的概率分布都属于\emph{指数族分布}的特例。参数为$\bm\eta$的变量$\bm x$的指数族分布定义为具有如下形式的概率分布的集合
+\begin{equation}
+	\label{eq:exp-family}
+	p(\bm x\ |\ \bm\eta) = h(\bm x)g(\bm \eta)\exp\{\bm\eta^\top\bm u(\bm x) \}
+\end{equation}
+其中$\bm x$可能是标量或者向量，可能是离散的或者连续的。函数$g(\bm x)$可以看成是系数，确保了概率分布的归一化，因此满足
+\begin{equation}
+	g(\bm\eta)\int h(\bm x)\exp\{\bm \eta^\top\bm u(\bm x)\} \ \mathrm{d}\bm x = 1
+\end{equation}
+考虑伯努利分布的指数族分布形式
+\begin{equation}
+	p(x\ |\ \mu) = \mathrm{Bern}(x\ |\ \mu) = \mu^x(1-\mu)^{1-x}
+\end{equation}
+将右侧写成对数的指数形式
+\begin{align}
+	p(x\ |\ \mu) &= \exp\{x\log \mu + (1-x)\log (1-\mu)\} \notag \\
+	&= (1-\mu)\exp\left\{ \log\left( \frac{\mu}{1-\mu} \right) \right\}
+\end{align}
+与公式\ref{eq:exp-family}比较，可以看出
+\begin{equation}
+	\eta = \log\left( \frac{\mu}{1-\mu}\right)	
+\end{equation}
+从中解出$\mu$, 得$\mu=\sigma(x)$，其中
+\begin{equation}
+	\sigma(x) = \frac{1}{1+\exp(-\eta)}
+\end{equation}
+这被称为logistic sigmoid函数。因此，伯努利分布的指数族分布形式为
+\begin{equation}
+	p(x\ |\ \mu) = \sigma(-\eta)\exp(\eta x)
+\end{equation}
+其中我们使用了$1-\sigma(\eta)=\sigma(-\eta)$。
+\chapter{线性回归模型}
+给定一个由$N$个观测值$\{\bm x_n\}$组成的数据集，其中$n=1, \ldots, N$，以及对应的目标值$\{t_n\}$，我们的目标是预测给定的$\bm x$值的情况下，$t$的值。最简单的方法是直接建立一个适当的函数$y(\bm x)$，对于新的输入$\bm x$，这个函数能够直接给出对应的$t$的预测。更一般地，从一个概率分布$p(t\ |\ \bm x)$建模，表示对于给定一个$\bm x$，对于$t$的不确定性。
+\section{线性函数模型}
+最简单的模型是对输入变量的线性组合
+\begin{equation}
+	y(\bm x, \bm \omega) = \omega_0 + \omega_1 x_1 + \ldots +\omega_D x_D
+\end{equation}
+其中$\bm x=(x_1, \ldots, x_D)^\top$，这通常被简单的称为\emph{线性回归}。这个模型的关键性质是它是参数$\omega_0, \ldots, \omega_D$的一个线性函数。
+
+另外，我们也可以扩展模型的类别：将输入变量固定的非线性函数进行组合，形式为
+\begin{equation}
+	y(\bm x,\bm \omega) = \omega_0 + \sum_{j=1}^{M-1}\omega_j\phi_j(\bm x)
+\end{equation}
+其中$\phi_j(\bm x)$被称为基函数。通过把下标$j$的最大值记作$M-1$，模型中总参数个数为$M$个。参数$\omega_0$被称为\emph{偏置参数}。若定义一个额外的基函数$\phi_0(\bm x)=1$，这时
+\begin{equation}
+	y(\bm x, \bm \omega) = \sum_{j=1}^{M-1}\omega_j\phi_j(\bm x) = \bm \omega^\top\bm \phi(\bm x)
+\end{equation}
+其中$\bm\omega=(\omega_0, \ldots, \omega_{M-1})^\top$，$\bm \phi =(\phi_0, \ldots, \phi_{M-1})^\top$
+\subsection{最大似然与最小平方误差}
+假设目标变量$t$由确定的函数$y(\bm x, \bm\omega)$给出，这个函数被附加了\emph{高斯噪声}，即
+\begin{equation}
+	t = y(\bm x, \bm \omega) + \epsilon
+\end{equation}
+其中，$\epsilon$是一个均值为零，精度(方差的倒数)为$\beta$的随机变量。因此，有
+\begin{equation}
+	p(t\ |\ \bm x,\bm \omega, \beta) = \mathcal N(t\ |\ y(\bm x, \bm \omega), \beta^{-1})
+\end{equation}
+考虑有一个数据集$\bm X = \{\bm x_1, \ldots, \bm x_N\}$，对应的目标值为$t_1, \ldots, t_N$，把目标值$\{t_n\}$组成一个列向量，记作$\bm t$。似然函数为
+\begin{equation}
+	p(\bm t\ |\ \bm X, \bm \omega, \beta) = \prod_{n=1}^{N}\mathcal N(t_n\ |\ \bm\omega^\top\bm\phi(\bm x_n), \beta^{-1})
+\end{equation}
+省略符号$\bm X$, 并取似然对数，使用一元高斯分布的形式，有
+\begin{align}
+	\log p(\bm t\ |\ \bm\omega, \beta^{-1}) &= \sum_{n=1}^{N}\log\mathcal N(t_n\ |\ \bm\omega^\top\bm\phi(\bm x_n), \beta^{-1}) \notag \\
+	&= \frac{N}{2}\log\beta - \frac{N}{2}\log(2\pi)-\beta E_D(\bm \omega)
+\end{align}
+其中平方和误差函数被定义为
+\begin{equation}
+	E_D(\bm \omega) = \frac{1}{2}\sum_{n=1}^{N}\{t_n-\bm\omega^\top\bm\phi(\bm x_n) \}^2
+\end{equation}
+之后，最大化似然函数。首先关于$\bm \omega$最大化。在这里，\emph{最大化似然函数与最小化平方和误差等价}。对$\bm \omega$求梯度，得
+\begin{equation}
+	\nabla_{\bm\omega}\log p(\bm t\ |\ \bm\omega, \beta) = \beta\sum_{n=1}^{N}\{t_n-\bm\omega^\top\bm\phi(\bm x_n)\}\bm\phi(\bm x_n)^\top
+\end{equation}
+令这个梯度等于零，可得
+\begin{equation}
+	0 = \sum_{n=1}^{N}t_n\bm\phi(\bm x_n)^\top - \bm\omega^\top\left( \sum_{n=1}^{N}\bm\phi(\bm x_n)\phi(\bm x_n)^\top \right)
+\end{equation}
+求解$\bm\omega$，我们有
+\begin{equation}
+	\bm\omega_{\mathrm{ML}} = (\bm\Phi^\top\bm\Phi)^{-1}\bm\Phi^\top\bm t
+\end{equation}
+这里，$\bm\Phi$是一个$N\times M$的矩阵，它的元素为$\bm\Phi_{nj} = \phi_j(\bm x_n)$，即
+\begin{equation}
+	\bm\Phi = \left(
+	\begin{matrix}
+		\phi_0(\bm x_1) & \phi_1(\bm x_1) &\cdots & \phi_{M-1}(\bm x_1) \\
+		\phi_0(\bm x_2) & \phi_1(\bm x_2) &\cdots & \phi_{M-1}(\bm x_2) \\
+		\vdots & \vdots & \ddots & \vdots \\
+		\phi_0(\bm x_N) & \phi_1(\bm x_N) &\cdots & \phi_{M-1}(\bm x_N) \\
+	\end{matrix}
+	\right)
+\end{equation}
+式中
+\begin{equation}
+	\bm\Phi^\dag \equiv (\bm\Phi^\top\bm\Phi)^{-1}\bm\Phi
+\end{equation}
+被称为$\bm\Phi$矩阵的Moore-Penrose\emph{伪逆矩阵}，可以被看成是逆矩阵对非方阵的一种推广。实际上，若$\bm\Phi$是方阵并且可逆，$\bm\Phi^\dag=\bm\Phi^{-1}$。
+\subsection{最小平方误差的几何解释}
+\subsection{正则化的最小平方误差}
+\section{偏差-方差分解}
+\section{贝叶斯线性回归}
+\subsection{参数分布}
+\subsection{预测分布}
+
+\chapter{线性分类模型}
+
+\chapter{核方法}
+
+\chapter{稀疏核机}
+\section{最大边缘分类器}
+在线性模型的二分类问题中，模型的形式为
+\begin{equation}
+	\label{eq:svm1}
+	y(\bm x) = \bm \omega^\top\phi(\bm x) + b
+\end{equation}
+其中$\phi(\bm x)$表示一个固定的特征空间变换。训练数据由$N$个输入向量$\bm x_1, \ldots,\bm x_N$组成，对应的目标值为$t_1, \ldots, t_N$，其中$t_n \in \{ -1, 1\}$，新的数据点$\bm x$根据$y(\bm x)$的符号进行分类。
+
+现在，假设数据在特征空间中是线性可分的，即至少存在一个参数$\bm \omega$和$b$，使得对于所有$t_n=+1$的点，公式\ref{eq:svm1}都满足$y(\bm x) > 0$，对于所由$t_n = -1$的点，都满足$y(\bm x) < 0$，从而对于所有的数据点$t_n y(\bm x_n) > 0$。
+
+有许多中方式可以将数据集分开，我们应该寻找泛化错误最小的那个解。\emph{支持向量机}(SVM)解决这个问题的方法是：选择使得边缘最大化的那个决策边界。
+
+\emph{边缘}的概念被定义为决策边界与任意样本之间的最小距离，如图所示
+
+\chapter{图模型}
+\section{贝叶斯网络}
+
+\chapter{混合模型和EM}
+\section{K-means 算法}
+假设有一个数据集$\{ \bm x_1, \bm x_2, \ldots, \bm x_N\}$，它由$D$维欧几里得空间中的随机变量$\bm x$的$N$次观测组成。我们的目的是要将数据划分成$K$个类别，假设$K$是给定的一个数。
+
+引入一组$D$维向量$\bm \mu_k$，其中$k=1, 2, \ldots, K$，且$\bm \mu_k$是第$k$个聚类关联的一个代表，可以认为$\bm \mu_k$是第$k$个聚类的中心。算法的目的是要找到每个数据点分别属于的类，以及一组向量$\{\bm \mu_k\}$，使得每个数据点和它最近的向量$\bm \mu_k$之间的距离的平方和最小。
+
+现在，对于每个数据点$\bm x_n$，引入一组对应的二值指示变量$r_{nk} \in \{0, 1\}$，其中 $k = 1, 2, \ldots, K$，表示每个数据点$\bm x_n$属于$K$个聚类中的。如果数据点$\bm x_n$属于第$k$个聚类，那么$r_{nk}=1$，且对于$j \neq k$, 有$r_{nj} = 0$。定义目标函数，形式为：
+\begin{equation}
+	\label{eq:kmeas-cost}
+	J = \sum_{n=1}^{N}\sum_{k=1}^{k}r_{nk}\| \bm x_n - \bm \mu_k \|^2
+\end{equation}
+它表示每个数据点与被分配的向量$\bm \mu_k$之间的距离的平方和。我们的目标是要找到$\{r_{nk}\}$与$\bm \mu_{nk}$的值，使得$J$达到最小值。
+
+可以使用迭代的方法来达到目标。每次迭代分为两个步骤，分别对应$r_{nk}$的最优化和$\bm \mu_k$的最优化。 首先，为$\bm \mu_k$选择一些初始值。然后，在第一阶段，关于$r_{nk}$最小化$J$，保持$\bm \mu_k$固定。第二阶段，关于$\bm \mu_k$最小化$J$，保持$r_{nk}$固定。不断重复这个二阶段优化直到收敛。
+
+首先考虑确定$r_{nk}$。公式\ref{eq:kmeas-cost}关于$r_{nk}$是线性的，且与不同的$n$相关的项是独立的，可以对每个$n$分别进行优化。只要$k$的值使$\|\bm x_n-\bm \mu_k\|^2$的值最小，就令$r_{nk}=1$，换句话说，可以简单的将数据点的聚类设置为最近的聚类中心。形式化的表述为
+\begin{equation}
+	r_{nk} = \left\{\begin{array}{ll}
+		1, & \text{如果} k = \arg\min_{j} \| \bm x_n - \bm \mu_j\|^2 \\
+		0, & \text{其他情况}
+	\end{array}\right.
+\end{equation}
+
+现在考虑$r_{nk}$固定时，关于$\bm \mu_K$的最优化。目标函数$J$是一个二次函数，令它关于$\bm \mu_k$的导数等于$0$，即可达到最小值，即
+\begin{equation}
+	2\sum_{n=1}^{N}r_{nk}(\bm x_n - \bm \mu_k) = 0
+\end{equation}
+解出$\bm \mu_k$的值，结果为
+\begin{equation}
+	\label{eq:u_k}
+	\bm \mu_k = \frac{\sum_n r_{nk}\bm x_n}{\sum_n r_{nk}}
+\end{equation}
+\ref{eq:u_k}中的分母等于聚类$k$中数据点的数量，因此这个结果的意义是：$\mu_k$为聚类$k$中所有数据点的均值。因此，此算法被称为K-means算法。
+
+重新为数据点分配聚类的步骤以及重新计算聚类均值的步骤重复进行，直到聚类的分配不再改变。每个阶段都减小了目标函数$J$，因此算法的收敛性得到保证。但是，\emph{算法可能收敛到$J$的一个局部最小值而非全局最小}。
+
+\section{混合高斯}
+高斯混合模型的概率分布可以写成多个高斯分布的线形叠加，即
+\begin{equation}
+	p(\bm x) = \sum_{k=1}^{K}\pi_k\mathcal N(\bm x\ | \ \bm \mu_k, \bm \Sigma_k)
+\end{equation}
+引入一个$K$维的二值随机变量$\bm z$, 采用“1-of-K”编码，其中一个特定的元素$z_k$等于$1$，其余所有的元素都等于$0$。 于是$z_k$的值满足$z_k \in \{0, 1\}$且$\sum_k z_k = 1$，并且我们看到根据哪个元素非零，向量$\bm z$有$K$个可能的状态。$\bm z$的边缘概率分布可以根据混合系数$\pi_k$进行赋值，即
+\begin{equation}
+	p(z_k=1) = \pi_k
+\end{equation}
+其中参数$\{\pi_k\}$必须满足
+\begin{equation}
+	0 \leqslant \pi_k \leqslant 1
+\end{equation}
+以及
+\begin{equation}
+	\sum_{k=1}^{K} \pi_k = 1
+\end{equation}
+由于$\bm z$使用了“1-of-K”编码，也可以将这个概率分布写成
+\begin{equation}
+	p(\bm z) = \prod_{k=1}^{K}\pi_k^{z_k}
+\end{equation}
+对于$\bm z$给定的一个值， $\bm x$的条件概率分布是一个高斯分布
+\begin{equation}
+	p(\bm x\ |\  z_k= 1) = \mathcal N (\bm x\ |\ \bm \mu_k, \bm \Sigma_k )
+\end{equation}
+类似的也可以写成
+\begin{equation}
+	p(\bm x \ | \ \bm z) = \prod_{k=1}^{K} \mathcal N (\bm x \ |\ \bm \mu_k, \bm \Sigma_k ) ^ {z_k}
+\end{equation}
+
+$\bm x $的边缘概率分布可以通过将联合概率分布对所有可能的$\bm z$求和的方式得到，即
+\begin{equation}
+	p(\bm x) = \sum_z p(\bm z)p(\bm x \ |\ \bm z) = \sum_{k=1}^{K}\pi_k \mathcal N(\bm x \ |\ \bm \mu_k, \bm \Sigma_k)
+\end{equation}
+于是我们找到了一个将隐变量$\bm z$显示写出的一个高斯混合分布一个等价公式。对联合概率分布$p(\bm x, \bm z)$而不是对$p(\bm x)$进行操作，会产生计算上极大的简化。
+
+另一个有重要作用的量是给定$\bm x$的情况下，$\bm z$的后验概率$p(\bm z\ |\ \bm x)$。用$\gamma(z_k)$表示$p(z_k=1\ |\ \bm x)$，其值可由贝叶斯定理给出
+\begin{align}
+	\gamma(z_k) = p(z_k=1\ |\ \bm x) &= \frac{p(z_k=1)p(\bm x\ |\ z_k=1)}{\sum_{j=1}^{K}p(z_j=1)p(\bm x\ |\ z_j=1)} \notag \\
+									 &= \frac{\pi_k p(\bm x\ |\ z_k=1)}{\sum_{j=1}^{K}\pi_j p(\bm x\ |\ z_j=1)} 
+\end{align}
+可以将$\pi_k$看成是$z_k=1$的先验概率，将$\gamma(z_k)$看成是观测到$\bm x$之后，对应的后验概率。
+
+假设我们有观测数据集$\{\bm x_1, \bm x_2, \ldots, \bm x_N\}$，我们希望使用混合高斯来对数据建模。可以将这个数据集标示为$N\times D$的矩阵$\bm X$，其中第$n$行为$\bm x_n^\top$。类似的，对应的隐变量被表示为一个$N\times K$的矩阵$\bm Z$，它的行为$\bm z_n^\top$，可以使用图\ref{fig:em-model} 所示的图模型来表示独立同分布数据集的高斯混合模型。$\bm X$的对数似然函数为
+\begin{equation}
+	\label{eq:6-15}
+	\log p(\bm X\ |\ \bm \pi, \bm \mu, \bm \Sigma)=\sum_{n=1}^{N}\log\left\{ \sum_{k=1}^{K}\pi_k\mathcal N(\bm x_n\ |\ \bm \mu_k, \Sigma_k) \right\}
+\end{equation}
+最大化高斯混合模型的对数似然函数式\ref{eq:6-15}比单一的高斯分布的情形更加复杂。因为对$k$的求和出现在了对数内部；\emph{如果令导数等于零，不会得到一个解析解}。
+使用基于梯度的优化方法可以得到解，但现在考虑另一种可行方法，称为\emph{EM算法}。
+
+\section{EM 算法}
+期望最大化算法，也叫EM算法，是寻找潜在变量的概率模型的最大似然解的一种通用方法。考虑一个概率模型，其中所有的观测变量记作$\bm X$，所有隐含变量记作$\bm Z$。联合概率分布$p(\bm X, \bm Z\ |\ \bm \theta)$由一组参数$\bm \theta $控制，目标是最大化似然函数
+\begin{equation}
+	p(\bm X\ |\ \bm \theta) = \sum_{\bm Z}p(\bm X, \bm Z | \bm \theta)
+\end{equation}
+这里，假设$\bm Z$是离散的。
+\begin{figure}
+	\centering
+	\caption{一组N个独立同分布数据点$\{\bm x_n\}$的高斯混合模型的图表示，对应的潜在变量为$\{\bm z_n\}$，其中$n=1,2,\ldots, N$。}
+	\label{fig:em-model}
+\end{figure}
+直接优化$p(\bm X\ |\ \bm\theta)$比较困难，但是最优化完整数据似然函数$p(\bm X, \bm Z\ |\ \bm \theta)$就容易得很多。接下来，引入一个定义在隐变量$\bm Z$上的分布$p(\bm Z)$。对任意$p(\bm Z)$，如下分解成立
+\begin{equation}
+	\log p(\bm X\ |\ \bm\theta) = \mathcal L(q, \bm \theta) + \mathrm{KL}(q\ \|\ p)
+\end{equation}
+其中
+\begin{equation}
+	\mathcal L(q, \bm\theta) = \sum_{\bm Z}q(\bm Z)\log\left\{ \frac{p(\bm X,\bm Z\ |\ \bm \theta)}{q(\bm Z)}\right\}
+\end{equation}
+\begin{equation}
+	\mathrm{KL}(p\ \|\ q) = -\sum_{\bm Z}q(\bm Z)\log\left\{\frac{p(\bm Z\ |\ \bm X, \bm\theta)}{q(\bm Z)}\right\}
+\end{equation}
+$\mathcal L(q, \bm\theta)$是概率分布$q(\bm Z)$的一个\emph{范函}，并且是一个参数$\bm\theta$的函数。因为$\mathrm{KL}(p\ \|\ q) \geqslant 0$，当且仅当$q(\bm Z) = p(\bm Z\ |\ \bm X, \bm\theta)$时取得等号。因此，$\mathcal L(q, \bm\theta) \leqslant \log p(\bm X\ |\ \bm\theta)$，即$\mathcal L(q, \bm\theta)$是$\log p(\bm X\ |\ \bm\theta)$是的一个下界。
+
+EM算法是一个两阶段迭代优化算法。
+
+假设当前的参数$\bm\theta^{\mathrm{old}}$，在\emph{E步骤}中，下界$\mathcal L(q, \bm\theta^{\mathrm{old}})$关于$q(\bm Z)$最大化，而$\bm\theta^{old}$保持固定。当KL散度为零时，即得到了最大化的解。换句话说，最大值出现在$q(\bm Z)$与后验概率分布$p(\bm Z\ |\ \bm X, \bm\theta)$相等时，KL散度等于零，此时，下界等于最大似然函数。
+
+在接下来的\emph{M步骤}中，分布$q(\bm Z)$保持固定，下界$\mathcal L(q, \bm\theta)$关于$\bm\theta$最大化，得到了某个新的值$\bm\theta^{\mathrm{new}}$，这会使得下界$\mathcal L$增大。同时也会使得对数似然增大，因为概率分布$q$由旧的参数值确定，并且在\emph{M步骤}保持固定，因此不会等于新的后验分布$p(\bm Z\ |\ \bm X,\bm\theta^{\mathrm{new}})$，从而KL散度非零；而且对数似然的增加量大于下界$\mathcal L(q, \bm\theta)$的增加量。在\emph{E步骤}之后，下界的形式为
+\begin{align}
+	\mathcal L(q, \bm\theta) &= \sum_{\bm Z}p(\bm Z\ |\ \bm X, \bm\theta^{\mathrm{old}})\log p(\bm X, \bm Z\ |\ \bm\theta) \notag \\
+	& \ \ \ \ - \sum_{\bm Z}p(\bm Z\ |\ \bm X,\bm\theta^{\mathrm{old}})\log p(\bm Z\ |\ \bm X, \bm\theta^{\mathrm{old}}) \notag \\
+	&= \mathcal Q(\bm\theta, \bm\theta^{\mathrm{old}}) + \text{常数}
+\end{align}
+其中常数是$q$的熵，与$\bm \theta$无关。从而，在\emph{M步骤}中，最大化的量是\emph{完整数据对数似然函数的期望}。完整的EM如算法\ref{algo:em}所示。
+\begin{algorithm}
+\caption{用于含有隐变量最大似然函数参数估计的EM算法}
+\label{algo:em}
+\begin{algorithmic}[1]
+\STATE 选择参数的初始值$\bm\theta^{(t)}, t = 0$
+\REPEAT
+\STATE \textbf{E步骤}:\ \ 计算$p(\bm Z\ |\ \bm X, \bm\theta^{(t)})$
+\STATE \textbf{M步骤}:\ \ 计算$\bm\theta^{(t+1)}$，由下式给出
+\begin{equation*}
+	\bm \theta^{(t+1)} = \arg\max_{\bm \theta}\mathcal Q (\bm\theta, \bm\theta^{(t)})
+\end{equation*}
+其中
+\begin{equation*}
+	\mathcal Q (\bm\theta, \bm\theta^{(t)}) = \sum_{\bm Z}p(\bm Z\ |\ \bm X, \bm \theta^{(t)}) \log p(\bm X, \bm Z\ |\ \bm\theta)
+\end{equation*}
+\UNTIL{对数似然函数收敛或者参数值收敛}
+\end{algorithmic}
+\end{algorithm}
+
+\section{EM算法实例}
+\subsection{用于混合高斯模型的EM}
+现在考虑将EM算法的隐变量观点用于一个具体的例子，即高斯混合模型。我们的目标是最大化对数似然函数\ref{eq:6-15}，这是使用观测数据集$\bm X$计算的。这种情况比单一的高斯困难，因为求和出现在了对数运算内部。假设除了观测数据集$\bm X$，还有对应的离散变量$\bm Z$。现在考虑对完整数据$\{\bm X, \bm Z\}$最大化。完整数据集的似然函数的形式为
+\begin{equation}
+	p(\bm X, \bm Z\ |\ \bm \mu, \bm \Sigma, \bm \pi) = \prod_{n=1}^{N}\prod_{k=1}^{K}\pi_k^{z_{nk}}\mathcal N(\bm x_n\ |\ \bm\mu_k, \bm\Sigma_k)^{z_{nk}}
+\end{equation}
+其中$z_{nk}$表示$\bm z_n$的第$k$个分量。取对数，有
+\begin{equation}
+	\log p(\bm X, \bm Z\ |\ \bm\mu, \bm\Sigma, \bm\pi) = \sum_{n=1}^{N}\sum_{k=1}^{K}z_{nk}\left\{ \log\pi_k+\log\mathcal N(\bm x_n\ |\ \bm\mu_k, \bm\Sigma_k) \right\}
+\end{equation}
+现在将完全数据的对数似然对$\bm Z$的后验概率分布求期望。后验概率分布为
+\begin{equation}
+	p(\bm Z\ |\ \bm X, \bm \mu, \bm\Sigma, \bm\pi) = \prod_{n=1}^{N}p(\bm z_n\ |\ \bm x_n, \bm \mu,\bm\Sigma, \bm\pi)
+\end{equation}
+在这个分布下, $z_{nk}$的期望为
+\begin{align}
+	\mathbb E_{\bm Z}[z_{nk}] & = \sum_{\bm z_1}\cdots\sum_{\bm z_N} z_{nk}p(\bm Z\ |\ \bm X, \bm \theta) \notag \\
+	& = \sum_{\bm z_1}p(\bm z_1\ |\ \bm x_n, \bm\theta) \cdots \sum_{\bm z_n}z_{nk}p(\bm z_n\ |\ \bm x_n, \bm\theta) \cdots \sum_{\bm z_N}p(\bm z_N\ |\ \bm x_n, \bm\theta) \notag \\
+	& = \sum_{\bm z_n}z_{nk}p(\bm z_n\ |\ \bm x_n, \bm\theta) \notag \\
+	& = p(z_{nk} = 1\ |\ \bm x_n, \bm\theta)
+\end{align}
+其中$\bm\theta = (\bm\mu, \bm\Sigma, \bm\pi)$。利用贝叶斯公式，有
+\begin{align}
+	p(z_{nk}=1\ |\ \bm x_n, \bm\theta) &= \frac{p(z_{nk}=1)p(\bm x_n\ |\ z_{nk}=1)}{\sum_{j=1}^{K}p(z_{nj}=1)p(\bm x_n \ |\ z_{nj}=1)} \notag \\
+	& = \frac{\pi_k \mathcal N(\bm x_n\ |\ \bm\mu_k, \bm\Sigma_k)}{\sum_{j=1}^{K}\pi_j\mathcal N(\bm x_n\ |\ \bm\mu_j, \bm\Sigma_j)} \notag \\
+	& \equiv \gamma(z_{nk})
+\end{align}
+$\gamma(z_{nk})$被定义为数据点$\bm x_n$种含有来自于第$k$个高斯分布的“成分”。
+于是，完整数据的对数似然的期望值为
+\begin{equation}
+	\label{eq:gmm-exp}
+	\mathbb E_{\bm Z}\left[\log p(\bm X,\bm Z\ |\ \bm\mu,\bm\Sigma,\bm \pi) \right] = \sum_{n=1}^{N}\sum_{k=1}^K\gamma(z_{nk})\left\{\log\pi_k + \log\mathcal N(\bm x_n\ |\ \bm\mu_k, \bm\Sigma_k)\right\}
+\end{equation}
+我们使用旧的参数$\left\{ \bm\mu^{old}, \bm\Sigma^{old}, \bm\pi^{old} \right\}$计算$\gamma(z_{nk})$(\emph{E步骤})；之后保持$\gamma(z_{nk})$不变，关于$\bm \mu_k$,$ \bm\Sigma_k$, $\pi_k$最大化(\emph{M步骤})，得到新的$\left\{ \bm\mu^{new}, \bm\Sigma^{new}, \bm\pi^{new} \right\}$。
+
+在进行M步骤之前，需要先参考一些关于矩阵求导数的运算，具体如下
+\begin{equation}
+	\sum_{i=1}^N\bm x_i^\top\bm S\bm x_i = \mathrm{Tr}(\bm S\sum_{i=1}^N\bm x_i\bm x_i^\top)
+\end{equation}
+\begin{equation}
+	\frac{\partial\mathrm{Tr}(\bm A\bm B)}{\partial\bm A} = \bm B^\top
+\end{equation}
+\begin{equation}
+	\frac{\partial}{\partial\bm A}\log|\bm A| = (\bm A^{-1})^\top 
+\end{equation}
+
+现在关于$\pi_k$最大化。注意到由于$\sum_{k=1}^{K}\pi_k=1$的限制，可以使用拉格朗日乘数法进行优化。构造拉格朗日函数为
+\begin{equation}
+	\mathcal L(\bm\pi, \lambda) = \sum_{n=1}^N\sum_{k=1}^K\gamma(z_{nk})\log \pi_k+ \lambda(1-\sum_{k=1}^K\pi_k)
+\end{equation}
+对$\pi_k$求导，并令其等于零，有
+\begin{equation}
+	\frac{1}{\lambda}\sum_{n=1}^N\gamma(z_{nk}) = \pi_k,\ \ \ k=1, \ldots, N
+\end{equation}
+又由$\sum_{k=1}^{K}\pi_k=1$，得出$\lambda=N$，所以更新后的$\pi_k$为
+\begin{equation}
+	\pi_k^{new} = \frac{N_k}{N}
+\end{equation}
+其中$N_k = \sum_{n=1}^N\gamma(z_{nk})$。
+
+关于$\bm\mu_k$最大化。注意到，公式\ref{eq:gmm-exp}中包含$\bm\mu_k$的项是
+\begin{align}
+	\label{eq:gmm-33}
+	& \sum_{n=1}^{N}\gamma(z_{nk})\log\mathcal N(\bm x_n\ |\ \bm\mu_k, \bm\Sigma_k) \notag \\
+	& = \sum_{n=1}^{N}\gamma(z_{nk})\left\{-\frac{D}{2}\log(2\pi) + \frac{1}{2}\log|\bm\Sigma_k^{-1}| -\frac{1}{2} (\bm x_n-\bm \mu_k)^\top\bm\Sigma_k^{-1}\bm(\bm x_k-\bm\mu_k)\right\}
+\end{align}
+对$\bm\mu_k$求导，并令其等于零，得
+\begin{equation}
+	\sum_{n=1}^N\gamma(z_{nk})\bm\Sigma_k^{-1}(\bm x_n-\bm\mu_k) = 0
+\end{equation}
+化简
+\begin{equation}
+	\sum_{n=1}^N\gamma(z_{nk})\bm\Sigma_k^{-1}\bm x_n  = \sum_{n=1}^N\gamma(z_{nk})\bm\Sigma_k^{-1}\bm u_k
+\end{equation}
+两边同乘$\bm\Sigma_k$，得
+\begin{equation}
+	\sum_{n=1}^N\gamma(z_{nk})\bm x_n = \sum_{n=1}^N\gamma(z_{nk})\bm \mu_k = N_k \bm\mu_k
+\end{equation}
+所以，得到新的$\bm \mu_k^{new}$为
+\begin{equation}
+	\bm\mu_k^{new} = \frac{1}{N_k}\sum_{n=1}^N\gamma(z_{nk})\bm x_n
+\end{equation}
+
+关于$\bm\Sigma_k$最大化。将公式\ref{eq:gmm-33}关于$\bm\Sigma_k^{-1}$求导，并令其导数等于零。具体过程如下
+\begin{align}
+	\bm\Sigma_k & = \frac{1}{N_k}\frac{\partial}{\partial \bm\Sigma_k^{-1}}\mathrm{Tr}\left(\bm\Sigma_k^{-1}\sum_{n=1}^N\gamma(z_{nk})(\bm x_n-\bm \mu_k)(\bm x_n-\bm\mu_k)^\top\right) \notag \\
+	& = \frac{1}{N_k}\sum_{n=1}^N\gamma(z_{nk})(\bm x_n-\bm \mu_k)(\bm x_n-\bm\mu_k)^\top
+\end{align}
+所以，新的$\bm\Sigma_k^{new} = \frac{1}{N_k}\sum_{n=1}^N\gamma(z_{nk})(\bm x_n-\bm \mu_k^{new})(\bm x_n-\bm\mu_k^{new})^\top$。
+
+总结一下，高斯混合分布的参数估计如下
+\begin{itemize}
+	\item 初始化均值$\bm \mu_k$，协方差$\bm \Sigma_k$和混合系数$\pi_k$，计算对数似然的初始值
+	\item \emph{E步骤}。使用当前参数，计算每个数据点的成分$\gamma(z_{nk})$
+	\begin{equation}
+		\gamma(z_{nk}) = \frac{\pi_k\mathcal N(\bm x_n\ |\ \bm\mu_k,\bm\Sigma_k)}{\sum_{j=1}^K\pi_j\mathcal N(\bm x_n\ |\ \bm\mu_j,\bm\Sigma_j)}
+	\end{equation}
+	\item \emph{M步骤}。使用当前的$\gamma(z_{nk})$重新估计参数。
+	\begin{equation}
+		\bm\mu_k^{new} = \frac{1}{N_k}\sum_{n=1}^N\gamma(z_{nk})\bm x_n
+	\end{equation}
+	\begin{equation}
+		\bm\Sigma_k^{new} = \frac{1}{N_k}\sum_{n=1}^N\gamma(z_{nk})(\bm x_n-\bm \mu_k^{new})(\bm x_n-\bm\mu_k^{new})^\top
+	\end{equation}
+	\begin{equation}
+		\pi_k^{new} = \frac{N_k}{N}
+	\end{equation}
+	其中
+	\begin{equation}
+		N_k = \sum_{n=1}^N\gamma(z_{nk})
+	\end{equation}
+	\item 计算对数似然函数
+	\begin{equation}
+		\log p(\bm X\ |\ \bm \pi, \bm \mu, \bm \Sigma)=\sum_{n=1}^{N}\log\left\{ \sum_{k=1}^{K}\pi_k\mathcal N(\bm x_n\ |\ \bm \mu_k, \Sigma_k) \right\}
+	\end{equation}
+	检查参数或者对数似然函数的收敛性。若没有满足收敛条件，返回\emph{E步骤}。
+\end{itemize}
+
+\subsection{伯努利分布的混合}
+考虑$D$个二值变量$\bm x_i$组成的集合，其中$i=1,\ldots, D$，每个变量都由一个参数为$\mu_i$的伯努利分布控制，即
+\begin{equation}
+	p(\bm x\ |\ \bm \mu) = \prod_{i=1}^D\mu_i^{x_i}(1-\mu_i)^{1-x_i}
+\end{equation}
+其中$\bm x = (x_1,\ldots,x_D)^\top$且$\bm \mu=(\mu_1, \ldots, \mu_D)$。我们看到，给定$\bm \mu$的条件下，各个变量$x_i$是独立的。很容易看出，这个分布的均值和方差为
+\begin{equation}
+	\mathbb E[\bm x] = \bm\mu
+\end{equation}
+\begin{equation}
+	\mathrm{Var}[\bm x] = \mathrm{diag}\{ \mu_i(1-\mu_i) \}
+\end{equation}
+
+现在考虑分布的混合，即
+\begin{equation}
+	\label{eq:em-bern}
+	p(\bm x\ |\ \bm\mu, \bm\pi) = \sum_{k=1}^K\pi_kp(\bm x\ |\ \bm\mu_k)
+\end{equation}
+其中$\bm\mu=\{\bm\mu_1,\ldots,\bm\mu_K\}$，$\bm\pi=\{\pi_1,\ldots,\pi_K\}$，且
+\begin{equation}
+	p(\bm x\ |\ \bm\mu_k) = \prod_{i=1}^D\mu_{ki}^{x_i}(1-\mu_{ki})^{1-x_i}
+\end{equation}
+这个混合分布分均值和方差为
+\begin{equation}
+	\mathbb E[\bm x] = \sum_{k=1}^{K}\pi_k\bm\mu_k
+\end{equation}
+\begin{equation}
+	\mathrm{Cov}[\bm x] = \sum_{k=1}^K\pi_k\left\{ \bm\Sigma_k+\bm\mu_k\bm\mu_k^\top \right\} - \mathbb E[\bm x]\mathbb E[\bm x]^\top
+\end{equation}
+其中$\sum_k=\mathrm{diag}\{\u_{ki}(1-\mu_{ki})\}$。由于协方差矩阵Cov$[\bm x]$不再是对角矩阵，因此混合分布可以描述变量之间的相关性，这与单一的伯努利分布不同。
+
+现在推导混合伯努利分布的最大化似然函数的EM算法。引入隐变量$\bm z$，它与每个$\bm x$实例相关联。与高斯分布混合模型的情形相同，$\bm z = (z_1, \ldots, z_K)^\top$是一个二值$K$维变量，其中只有一个元素等于$1$，其余元素等于$0$。这样，给定隐变量，$\bm x$的条件概率分布形式为
+\begin{equation}
+	p(\bm x\ |\ \bm z, \bm\mu) = \prod_{k=1}^K p(\bm x\ |\ \bm\mu_k)^{z_k}
+\end{equation}
+隐变量与混合高斯的情形相同
+\begin{equation}
+	p(\bm z\ |\ \bm\pi) = \prod_{k=1}^K \pi_k^{z_k}
+\end{equation}
+如果将$p(\bm x\ |\ \bm z, \bm\mu)$与$p(\bm z\ |\ \bm\pi)$相乘，然后对$\bm z$求和，就回复出了公式\ref{eq:em-bern}。
+
+为了推导EM算法，首先写出完整数据的对数似然，形式为
+\begin{equation}
+	\log p(\bm X, \bm Z\ |\ \bm\mu, \bm\pi) = \sum_{n=1}^{N}\sum_{k=1}^K z_{nk}\left\{ \log \pi_k + \sum_{i=1}^D\left[x_{ni}\log\mu_{ki}+(1-x_{ni})\log(1-\mu_{ki})\right] \right\}
+\end{equation}
+其中$\bm X= \{\bm x_n\}$，$\bm Z=\{\bm z_n\}$。接下来取完整数据对数似然关于隐变量后验概率分布的期望，得
+\begin{equation}
+	\label{eq:em-bern-likehood}
+	\log p(\bm X, \bm Z\ |\ \bm\mu, \bm\pi) = \sum_{n=1}^{N}\sum_{k=1}^K\gamma(z_{nk})\left\{ \log \pi_k + \sum_{i=1}^D\left[x_{ni}\log\mu_{ki}+(1-x_{ni})\log(1-\mu_{ki})\right] \right\}
+\end{equation}
+其中$\gamma(z_{nk})=\mathbb E[z_{nk}]$是给定数据点$\bm x_n$的条件下，分量$k$的后验概率分布。在\emph{E步骤}中，这些后验概率使用贝叶斯定理计算，形式为
+\begin{align}
+	\gamma(z_{nk}) &= \mathbb E[z_{nk}] \notag \\
+	&= \frac{\pi_k p(\bm x_n\ |\ \bm\mu_k)}{\sum_{j=1}^K\pi_j p(\bm x_n\ |\ \bm\mu_j)}
+\end{align}
+\emph{M步骤中}，关于$\bm\mu_k$最大化。令公式\ref{eq:em-bern-likehood}关于$\bm\mu_k$求导，并令其等于零，整理可得
+\begin{equation}
+	\mu_k = \frac{1}{N_k}\sum_{n=1}^N\gamma(z_{nk})\bm x_n = \overline{\bm x}_k
+\end{equation}
+其中
+\begin{equation}
+	N_k = \sum_{n=1}^{N}\gamma(z_{nk})
+\end{equation}
+对于关于$\pi_k$最大化，我们需要引入一个拉格朗日乘数来满足限制条件$\sum_{k=1}^K\pi_k=1$。与混合高斯分布类似，我们有
+\begin{equation}
+	\pi_k = \frac{N_k}{N}
+\end{equation}
+结果与直觉相符，即分量$k$的混合系数等于数据集里那个分量的数据点所占的比例。
+\chapter{近似推断}
+
+\chapter{采样方法}
+\section{基本算法}
+\subsection{概率分布采样}
+\subsection{拒绝采样}
+\subsection{重要性采样}
+\section{马尔可夫链蒙特卡罗方法}
+\subsection{马尔可夫链}
+\subsection{Metropolis-Hastings算法}
+\section{吉布斯采样}
+
+\chapter{连续潜在变量}
+\section{主成分分析}
+主成分分析，或者称为PCA，是一种广泛使用的技术，应用的领域包括维度降低、有损数据压缩、特征抽取、数据可视化。有两种经常使用的PCA的定义：
+\begin{itemize}
+	\item PCA被定义为数据在被称为\emph{主子空间}的低维线性空间上的投影，使得投影数据的方差最大化
+	\item 也可以被定义为使得平均投影代价最小的线性投影，平均投影代价是指数据点和它们的投影之间的平均平方距离
+\end{itemize}
+\subsection{最大方差形式}
+考虑一组观测数据集${\bm x_n}$，其中$n=1,\ldots,N$，$\bm x_n$是一个$D$维欧几里得空间中的变量。考虑将数据投影到维度是$M<D$的空间中。
+
+首先，考虑在一维空间$(M=1)$上的投影。可以使用$D$维向量$\bm u_1$定义投影方法。为了计算方便和不失一般性，假定选择一个单位向量，而且$\bm u_1^{\top}\bm u_1 = 1$，这样每个数据点$\bm x_n$被投影到一个标量值$\bm u_1^{\top}\bm x_n$上。被投影数据的均值是$\bm u_1^{\top}\overline{\bm x}$，其中$
+\overline{\bm x}$是样本集合的均值，形式为
+\begin{equation}
+	\overline{\bm x} = \frac{1}{N}\sum_{n=1}^{N}\bm x_n
+\end{equation}
+投影数据的方差为
+\begin{equation}
+	\frac{1}{N}\sum_{n=1}^{N}\{\bm u_1^{\top}\bm x_n - \bm u_1^{\top}\overline{\bm x}\}^2 = \bm u_1^\top\bm S\bm u_1
+\end{equation}
+其中$\bm S$是协方差矩阵，定义为
+\begin{equation}
+	\bm S = \frac{1}{N}\sum_{n=1}^{N}(\bm x_n - \overline{\bm x})(\bm x_n - \overline{\bm x})^\top
+\end{equation}
+现在关于$\bm u_1$最大化投影方差$\bm u_1^\top\bm S\bm u_1$，包含约束条件$\|\bm u_1\| = 1$。可以采用拉格朗日乘数法，转化为如下的无约束优化问题
+\begin{equation}
+	\bm u_1^\top \bm S\bm u_1 + \lambda_1(1-\bm u_1^\top\bm u_1)
+\end{equation}
+通过令其关于$\bm u_1$导数等于零，可以看到驻点满足
+\begin{equation}
+	\bm S\bm u_1 = \lambda_1\bm u_1
+\end{equation}
+这表明$\bm u_1$一定是$\bm S$的一个特征向量。如果左乘$\bm u_1^\top$，可以看到方差为
+\begin{equation}
+	\bm u_1^\top \bm S\bm u_1 = \lambda_1
+\end{equation}
+因此当我们将$\bm u_1$设置为与具有最大特征值$\lambda_1$的特征向量时，方差会达到最大值。这个特征向量被称为\emph{第一主成分}。
+
+可以使用类似的方法定义额外的主成分，方法是：在与所有已经考虑过的方向正交的方向中，选择使得投影数据方差最大化的方向。例如，我们考虑$M$维投影空间的情况，那么最大化投影数据方差的方向由协方差矩阵$\bm S$的$M$个特征向量$\bm u_1, \bm u_2, \ldots, \bm u_M$定义，对应的$M$个特征值是$\lambda_1, \lambda_2, \ldots, \lambda_M$。
+
+总结一下，主成分分析涉及计算数据集的均值$\overline{\bm x}$和协方差矩阵$\bm S$，然后寻找与$\bm S$对应的$M$个最大特征值的特征向量。寻找一个$D\times D$矩阵的完整的特征向量分解的代价为$\bm O(D^3)$。若只将数据投影到前$M$个主成分中，那么只需要寻找前$M$个特征向量和特征值，这可以使用更高效的算法，时间复杂度为$\bm O(MD^2)$，或者也可以使用EM算法。
+\subsection{最小误差形式}
+PCA的另一种形式，基于最小投影误差。先引入一个完备的单位正交集合$\{\bm u_i\}$，其中$i=1, \ldots, D$，且满足
+\begin{equation}
+	\bm u_i^\top \bm u_j = \delta_{ij}
+\end{equation}
+由于是完备的，因此每个数据点可以唯一的表示为一个线性组合，即
+\begin{equation}
+	\bm x_n = \sum_{i=1}^{D}\alpha_{ni}\bm u_i
+\end{equation}
+其中，系数$\alpha_{ni}$对于不同的数据点来说是不同的。这相当于将坐标系旋转到了一个由$\{\bm u_i\}$表示的新坐标系。我们有$\alpha_{nj} = \bm x_n^\top \bm u_j$，不失一般性，我们有
+\begin{equation}
+	\label{eq:pca-9-9}
+	\bm x_n = \sum_{i=1}^{D}(\bm x_n^\top \bm u_i)\bm u_i
+\end{equation}
+我们的目标是限定数量$M<D$个变量的一种表示来近似数据点，这对应于在低维子空间的一个投影。因此，我们可以用下式来近似每个数据点$\bm x_n$
+\begin{equation}
+	\label{eq:pca-x_n}
+	\tilde{\bm x}_n = \sum_{i=1}^{M}z_{ni}\bm u_i + \sum_{i=M+1}^{D}b_i\bm u_i
+\end{equation}
+其中$\{z_{nj}\}$依赖于特定的数据点，而$\{b_i\}$是常数，对于所有的数据点都相同。可以选择$\{\bm u_i\}$，$\{z_{ni}\}$，$\{b_i\}$，从而最小化由维度降低带来的失真。失真的度量，可以使用原始数据点与它近似点$\title{\bm x}_n$之间的平方距离。因此目标函数是
+\begin{equation}
+	J = \frac{1}{N}\sum_{n=1}^{N}\|\bm x_n - \tilde{\bm x}_n \|^2
+\end{equation}
+考虑关于$\{z_{ni}\}$的最小化。代入$\tilde{\bm x}_n$的表达式，然后令它关于$z_{nj}$的导数等于零，有
+\begin{equation}
+	z_{nj} = \bm x_n^\top\bm u_j
+\end{equation}
+其中$j=1, \ldots, M$；类似地，令$J$关于$b_i$的导数等于零，我们有
+\begin{equation}
+	b_j = \overline{\bm x}^\top\bm u_j
+\end{equation}
+其中，$j=M+1, \ldots, D$。将$z_{nj}$与$b_j$代入到式\ref{eq:pca-x_n}中，使用式\ref{eq:pca-9-9}中$\bm x_n$的展开式，可以得到
+\begin{equation}
+	\bm x_n - \tilde{\bm x}_n= \sum_{i=M+1}^{D}\left\{ (\bm x_n - \overline{\bm x})^\top \bm u_i\right\} \bm u_i
+\end{equation}
+然后就得到了失真度量$J$的表达式，它是一个纯粹的关于$\{\bm u_i\}$的函数，形式为
+\begin{equation}
+	J = \frac{1}{N}\sum_{n=1}^{N}\sum_{i=M+1}^{D}(\bm x_n^\top\bm u_i - \overline{\bm x}^\top\bm u_i)^2  = \sum_{i=M+1}^{D}\bm u_i^\top\bm S\bm u_i
+\end{equation}
+
+\subsection{高维数据的PCA}
+在PCA的一些应用中，会出现数据维度远大于数据样本的个数。例如将PCA应用到由几百张图片构成的数据集合，此时，每个图片的维度为几百万维，远大于样本个数。若数据维度为$D$，样本个数为$N$，$(N << D)$，$N$个数据点定义了一个最多为$N-1$维的子空间，运行PCA会发现至少$N-D+1$个特征值为零；另外，寻找$D\times D$矩阵的特征向量算法的计算复杂度为$\bm O(D^3)$，对于高维度的数据来说，在计算上也不可行。
+
+可以使用下面的方法解决这个问题。$\bm X$定义为$(D\times D)$维中心数据矩阵，它的第$n$行为$(\bm x_n - \overline{\bm x})^\top$。这样，数据的协方差矩阵可以写作$\bm S = \frac{1}{N}\bm X^\top \bm X$，对应的特征向量方程变成了
+\begin{equation}
+	\frac{1}{N}\bm X^\top \bm X\bm u_i = \lambda_i\bm u_i
+\end{equation}
+将两侧左乘一个$\bm X$，可得
+\begin{equation}
+	\frac{1}{N}\bm X \bm X^\top(\bm X\bm u_i) = \lambda_i(\bm X\bm u_i)
+\end{equation}
+若定义$\bm v_i = \bm X\bm u_i$，就有
+\begin{equation}
+\label{eq:h_pca}
+	\frac{1}{N}\bm X\bm X^\top\bm v_i = \lambda_i\bm v_i
+\end{equation}
+它是$N\times N$矩阵$\frac{1}{N}\bm X\bm X^\top$的一个特征向量方程，且这个矩阵与原始的协方差矩阵有相同的$N-1$个特征值，原始协方差矩阵本身还有额外$D-N+1$个值为零的特征值。我们可以在低维空间中解决这个问题，计算代价是$\bm O(N^3)$而不是$\bm O(D^3)$。
+
+为了得到原始协方差矩阵的特征向量，可以将公示\ref{eq:h_pca}两侧左乘$\bm X^\top$，得
+\begin{equation}
+	(\frac{1}{N}\bm X^\top\bm X)(\bm X^\top\bm v_i) = \lambda_i(\bm X^\top\bm v_i)
+\end{equation}
+从中，我们可以看到，$(\bm X^\top \bm v_i)$是原始数据协方差矩阵的一个特征向量，对应的特征值是$\lambda_i$。但是，这个特征向量的长度不一定为$1$，即$\bm u_i \propto \bm X^\top \bm v_i$。将此向量归一化，就可以得到$\bm u_i$，且$\|\bm u_i\|=1$。假设$\bm v_i$是单位向量，可以通过以下方式归一化
+\begin{equation}
+	\label{eq:u_i}
+	\bm u_i = \frac{1}{(N\lambda_i)^\frac{1}{2}}\bm X^\top\bm v_i
+\end{equation}
+
+总结一下，使用这种方法，首先计算$\bm X \bm X^\top$，然后找到它的特征向量和特征值，之后使用公式\ref{eq:u_i}计算原始数据协方差矩阵的特征向量。
+\section{概率PCA}
+\section{核PCA}
+\section{非线形隐变量模型}
+\subsection{独立成分分析}
+\subsection{自编码器}
+\section{非线性流行建模}
+
+\chapter{顺序数据}
+\section{马尔可夫模型}
+考虑一组数据$\{\bm x_1, \ldots, \bm x_N\}$，它们之间的联合概率分布使用乘积规则可以表示为如下
+\begin{equation}
+	p(\bm x_1, \ldots, \bm x_N)  = p(\bm x_1)\prod_{n=2}^{N}p(\bm x_n\ |\ x_1, \ldots, \bm x_{n-1})
+\end{equation}
+如果假设右侧的每个条件概率分布只与最近的一次观测有关，独立于其他所有之前的观测，那么就得到了\emph{一阶马尔科夫链}。这个模型中, $N$此数据观测的联合概率分布为
+\begin{equation}
+	p(\bm x_1, \ldots, \bm x_N) = p(\bm x_1)\prod_{n=2}^{N}p(\bm x_n\ |\ x_{n-1})
+\end{equation}
+在这种模型的大部分应用中，条件概率分布$p(\bm x_n\ |\ \bm x_{n-1})$被限制为相等的，这个模型被称为\emph{同质马尔可夫链}。
+
+虽然这比数据间独立的模型要一般一些，但是还是非常受限。对一些序列数据来说，连续若干个观测变量会对下一次预测提供重要的信息。一种让更早的观测产生影响的方法是使用更高阶的马尔可夫链，例如\emph{二阶马尔可夫链}，其联合概率分布为
+\begin{equation}
+	p(\bm x_1, \ldots, \bm x_N) = p(\bm x_1)p(\bm x_2\ |\ \bm x_1)\prod_{n=3}^{N}p(\bm x_n\ |\ \bm x_{n-1}, \bm x_{n-2})
+\end{equation}
+
+假如我们想构造任意阶数不受马尔可夫假设限制的序列模型时，同时能够使用较少的参数，可以引入额外的隐变量来使得复杂的模型能够从简单的模型中构建。对于每个观测值$\bm x_n$，引入一个隐变量$\bm z_n$(类型和维度可以与$\bm x_n$不同)。现在假设隐变量$\bm z_n$之间构成马尔可夫链，得到的图模型如图\ref{fig:HMM}所示。它满足如下的条件独立性质：在给定$\bm z_n$的条件下，$\bm z_{n-1}$与$\bm z_{n+1}$条件独立
+\begin{equation}
+	\bm z_{n-1} \perp \bm z_{n+1} \ |\ \bm z_n
+\end{equation} 
+这个模型的联合概率分布为
+\begin{equation}
+	p(\bm x_1, \ldots, \bm x_N, \bm z_1, \ldots, \bm z_N) = p(\bm z_1)\left [ \prod_{n=2}^{N}p(\bm z_n\ |\ \bm z_{n-1}) \right ]\prod_{n=1}^{N}p(\bm x_n\ |\ \bm z_n)
+\end{equation}
+\begin{figure}
+	\centering
+	\caption{使用隐变量的马尔可夫链来表示顺序数据，每个观测值都一个对应的隐变量的状态为条件。}
+	\label{fig:HMM}
+\end{figure}
+
+对顺序数据来说，图\ref{fig:HMM}描述了两个重要模型。如果隐变量是离散的，那么我们得到了隐马尔可夫模型或者HMM。在HMM中，观测变量可以是离散的或者连续的，并且可以使用许多不同条件概率分布进行建模。如果隐变量和观测变量都是高斯变量(节点的条件概率分布对于父节点的依赖是线性高斯的形式)，那么就得到了线性动态系统(linear dynamical system)。
+\section{隐马尔可夫模型}
+\emph{隐马尔可夫模型}(HMM)可以看成是图\ref{fig:HMM}所示状态空间的一个具体实例，其中因变量被要求是离散的。考虑一个固定时间，对应于一个混合概率分布模型，$p(\bm x\ |\ \bm z)$。所以，可以表示为概率混合分布模型的一种推广，其中每个观测分布的混合系数不是独立选择的，而是依赖于前一次观测的分量选择。HMM广泛应用在语音识别，自然语言建模，以及生物序列的分析中。
+
+与标准的混合模型相同，隐变量是离散的，服从多项式分布的变量$\bm z_n$，描述了哪个混合分量用于生成对应的观测$\bm x_n$，与之前一样可以使用$1$-of-$K$表示法。现在考虑$\bm z_n$的条件概率分布$p(\bm z_n\ |\ \bm z_{n-1})$。由于$\bm z_n$是$K$维的二值变量，故条件概率可以使用一个矩阵$\bm A$来表示，称为\emph{概率转移矩阵}，其中$\bm A_{jk}$表示$p(\bm z_{nk}=1\ |\ \bm z_{n-1, j}=1)$的概率。因此，条件概率可以写作
+\begin{equation}
+	p(\bm z_n\ |\ \bm z_{n-1}, \bm A) = \prod_{k=1}^K\prod_{j=1}^K\bm A_{jk}^{z_{n-1,j}z_{nk}}
+\end{equation}
+
+隐变量的初始节点$\bm z_1$很特别，因为它没有父节点，因此边缘概率分布$p(\bm z_1)$是由一个概率向量$\bm\pi$来表示的，元素为$\pi_k \equiv p(z_{1k}=1)$，即
+\begin{equation}
+	p(\bm z_1\ |\ \bm\pi) = \prod_{k=1}^K\bm\pi_k^{z_{1k}}
+\end{equation}
+也可以使用状态图\ref{fig:hmm-state}来描述一个节点。
+\begin{figure}
+	\centering
+	\caption{转移图表示的一个模型，它的隐变量有三种可能状态，对应于三个方框。黑线表示转移矩阵的元素$\bm A_{jk}$}
+	\label{fig:hmm-state}
+\end{figure}
+\section{线性动态系统}
+
+
+\chapter{组合模型}
